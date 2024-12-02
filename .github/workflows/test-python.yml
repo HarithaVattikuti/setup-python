@@ -9,8 +9,8 @@ on:
   pull_request:
     paths-ignore:
       - '**.md'
-  schedule:
-    - cron: 30 3 * * *
+  #schedule:
+  #  - cron: 30 3 * * *
   workflow_dispatch:
 
 jobs:
