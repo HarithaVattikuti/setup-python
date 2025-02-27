@@ -100172,8 +100172,26 @@ function getManifest() {
 }
 exports.getManifest = getManifest;
 function getManifestFromRepo() {
-    core.debug(`Getting manifest from ${MANIFEST_REPO_OWNER}/${MANIFEST_REPO_NAME}@${MANIFEST_REPO_BRANCH}`);
-    return tc.getManifestFromRepo(MANIFEST_REPO_OWNER, MANIFEST_REPO_NAME, AUTH, MANIFEST_REPO_BRANCH);
+    return __awaiter(this, void 0, void 0, function* () {
+        core.debug(`Getting manifest from ${MANIFEST_REPO_OWNER}/${MANIFEST_REPO_NAME}@${MANIFEST_REPO_BRANCH}`);
+        try {
+            const manifest = yield tc.getManifestFromRepo(MANIFEST_REPO_OWNER, MANIFEST_REPO_NAME, AUTH, MANIFEST_REPO_BRANCH);
+            console.log('Manifest response in JSON format:');
+            manifest.forEach((release) => {
+                console.log(JSON.stringify(release, null, 2));
+            });
+            return manifest;
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                core.debug(error.message);
+            }
+            else {
+                core.debug('An unknown error occurred');
+            }
+            throw error;
+        }
+    });
 }
 exports.getManifestFromRepo = getManifestFromRepo;
 function getManifestFromURL() {

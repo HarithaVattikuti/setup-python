@@ -44,16 +44,33 @@ export async function getManifest(): Promise<tc.IToolRelease[]> {
   return await getManifestFromURL();
 }
 
-export function getManifestFromRepo(): Promise<tc.IToolRelease[]> {
+export async function getManifestFromRepo(): Promise<tc.IToolRelease[]> {
   core.debug(
     `Getting manifest from ${MANIFEST_REPO_OWNER}/${MANIFEST_REPO_NAME}@${MANIFEST_REPO_BRANCH}`
   );
-  return tc.getManifestFromRepo(
-    MANIFEST_REPO_OWNER,
-    MANIFEST_REPO_NAME,
-    AUTH,
-    MANIFEST_REPO_BRANCH
-  );
+  try {
+    const manifest= await tc.getManifestFromRepo(
+      MANIFEST_REPO_OWNER,
+      MANIFEST_REPO_NAME,
+      AUTH,
+      MANIFEST_REPO_BRANCH
+    );
+
+    console.log('Manifest response in JSON format:');
+    manifest.forEach((release: tc.IToolRelease) => {
+      console.log(JSON.stringify(release, null, 2));
+    });
+
+    return manifest;
+  } catch (error) {
+    if (error instanceof Error) {
+      core.debug(error.message);
+    } else {
+      core.debug('An unknown error occurred');
+    }
+    throw error;
+
+  }
 }
 
 export async function getManifestFromURL(): Promise<tc.IToolRelease[]> {
