@@ -77,6 +77,31 @@ steps:
 - run: python my_script.py
 ```
 
+You can specify the [free threading](https://docs.python.org/3/howto/free-threading-python.html) version of Python by setting the `freethreaded` input to `true` or by using the special **t** suffix in some cases.
+You can use the **t** suffix when specifying the major and minor version (e.g., `3.13t`), with a patch version (e.g., `3.13.1t`), or with the **x.y-dev syntax** (e.g., `3.14t-dev`).
+Free threaded Python is only available starting with the 3.13 release.
+
+```yaml
+steps:
+- uses: actions/checkout@v4
+- uses: actions/setup-python@v5
+  with:
+    python-version: '3.13t'
+- run: python my_script.py
+```
+
+Note that the **t** suffix is not `semver` syntax. If you wish to specify a range, you must use the `freethreaded` input instead of the `t` suffix.
+
+```yaml
+steps:
+- uses: actions/checkout@v4
+- uses: actions/setup-python@v5
+  with:
+    python-version: '>=3.13'
+    freethreaded: true
+- run: python my_script.py
+```
+
 You can also use several types of ranges that are specified in [semver](https://github.com/npm/node-semver#ranges), for instance:
 
 - **[ranges](https://github.com/npm/node-semver#ranges)** to download and set up the latest available version of Python satisfying a range:
@@ -253,9 +278,9 @@ jobs:
 
 ## Using the `python-version-file` input
 
-`setup-python` action can read the Python or PyPy version from a version file. `python-version-file` input is used to specify the path to the version file. If the file that was supplied to `python-version-file` input doesn't exist, the action will fail with an error.
+`setup-python` action can read Python or PyPy version from a version file. `python-version-file` input is used for specifying the path to the version file. If the file that was supplied to `python-version-file` input doesn't exist, the action will fail with error.
 
->In case both `python-version` and `python-version-file` inputs are supplied, the `python-version-file` input will be ignored due to its lower priority.
+>In case both `python-version` and `python-version-file` inputs are supplied, the `python-version-file` input will be ignored due to its lower priority. The .tool-versions file supports version specifications in accordance with asdf standards, adhering to Semantic Versioning ([semver](https://semver.org)).
 
 ```yaml
 steps:
@@ -272,6 +297,15 @@ steps:
 - uses: actions/setup-python@v5
   with:
     python-version-file: 'pyproject.toml' # Read python version from a file pyproject.toml
+- run: python my_script.py
+```
+
+```yaml
+steps:
+- uses: actions/checkout@v4
+- uses: actions/setup-python@v5
+  with:
+    python-version-file: '.tool-versions' # Read python version from a file .tool-versions
 - run: python my_script.py
 ```
 
