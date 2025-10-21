@@ -8,6 +8,7 @@ import * as installer from './install-python';
 
 import * as core from '@actions/core';
 import * as tc from '@actions/tool-cache';
+import * as exec from '@actions/exec';
 
 // Python has "scripts" or "bin" directories where command-line tools that come with packages are installed.
 // This is where pip is, along with anything that pip installs.
@@ -30,6 +31,27 @@ function binDir(installDir: string): string {
   }
 }
 
+async function installPip(pythonLocation: string) {
+  const pipVersion = core.getInput('pip-version');
+
+  // Validate pip-version format: major[.minor][.patch]
+  const versionRegex = /^\d+(\.\d+)?(\.\d+)?$/;
+  if (pipVersion && !versionRegex.test(pipVersion)) {
+    throw new Error(
+      `Invalid pip-version "${pipVersion}". Please specify a version in the format major[.minor][.patch].`
+    );
+  }
+
+  if (pipVersion) {
+    core.info(
+      `pip-version input is specified. Installing pip version ${pipVersion}`
+    );
+    await exec.exec(
+      `${pythonLocation}/python -m pip install --upgrade pip==${pipVersion} --disable-pip-version-check --no-warn-script-location`
+    );
+  }
+}
+
 export async function useCpythonVersion(
   version: string,
   architecture: string,
@@ -49,8 +71,8 @@ export async function useCpythonVersion(
     // Use the freethreaded version if it was specified in the input, e.g., 3.13t
     freethreaded = true;
   }
-  core.debug(`Semantic version spec of ${version} is ${semanticVersionSpec}`);
 
+  core.debug(`Semantic version spec of ${version} is ${semanticVersionSpec}`);
   if (freethreaded) {
     // Free threaded versions use an architecture suffix like `x64-freethreaded`
     core.debug(`Using freethreaded version of ${semanticVersionSpec}`);
@@ -154,15 +176,36 @@ export async function useCpythonVersion(
     if (IS_WINDOWS) {
       // Add --user directory
       // `installDir` from tool cache should look like $RUNNER_TOOL_CACHE/Python/<semantic version>/x64/
-      // So if `findLocalTool` succeeded above, we must have a conformant `installDir`
+      // Extract version details
       const version = path.basename(path.dirname(installDir));
       const major = semver.major(version);
       const minor = semver.minor(version);
 
+      const basePath = process.env['APPDATA'] || '';
+      let versionSuffix = `${major}${minor}`;
+      // Append '-32' for x86 architecture if Python version is >= 3.10
+      if (
+        architecture === 'x86' &&
+        (major > 3 || (major === 3 && minor >= 10))
+      ) {
+        versionSuffix += '-32';
+      } else if (architecture === 'arm64') {
+        versionSuffix += '-arm64';
+      }
+      // Append 't' for freethreaded builds
+      if (freethreaded) {
+        versionSuffix += 't';
+        if (architecture === 'x86-freethreaded') {
+          versionSuffix += '-32';
+        } else if (architecture === 'arm64-freethreaded') {
+          versionSuffix += '-arm64';
+        }
+      }
+      // Add user Scripts path
       const userScriptsDir = path.join(
-        process.env['APPDATA'] || '',
+        basePath,
         'Python',
-        `Python${major}${minor}`,
+        `Python${versionSuffix}`,
         'Scripts'
       );
       core.addPath(userScriptsDir);
@@ -178,6 +221,9 @@ export async function useCpythonVersion(
   }
   core.setOutput('python-version', pythonVersion);
   core.setOutput('python-path', pythonPath);
+
+  const binaryPath = IS_WINDOWS ? installDir : _binDir;
+  await installPip(binaryPath);
 
   return {impl: 'CPython', version: pythonVersion};
 }

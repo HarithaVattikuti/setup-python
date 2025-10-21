@@ -24,7 +24,6 @@ jobs:
           [
             macos-latest,
             windows-latest,
-            ubuntu-20.04,
             ubuntu-22.04,
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
@@ -47,7 +46,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: setup-python ${{ matrix.pypy }}
         id: setup-python
@@ -89,7 +88,6 @@ jobs:
           - macos-13
           - macos-14
           - macos-15
-          - windows-2019
           - windows-2022
           - windows-2025
           - ubuntu-22.04
@@ -100,7 +98,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: setup-python ${{ matrix.pypy }}
         id: setup-python
@@ -142,7 +140,6 @@ jobs:
           [
             macos-latest,
             windows-latest,
-            ubuntu-20.04,
             ubuntu-22.04,
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
@@ -153,7 +150,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: setup-python ${{ matrix.pypy }}
         id: setup-python
@@ -177,7 +174,6 @@ jobs:
           [
             macos-latest,
             windows-latest,
-            ubuntu-20.04,
             ubuntu-22.04,
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
@@ -185,7 +181,7 @@ jobs:
             macos-13
           ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup PyPy and check latest
         uses: ./
         with:
@@ -220,7 +216,6 @@ jobs:
           [
             macos-latest,
             windows-latest,
-            ubuntu-20.04,
             ubuntu-22.04,
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
@@ -228,7 +223,7 @@ jobs:
             macos-13
           ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup PyPy and check latest
         uses: ./
         with:
