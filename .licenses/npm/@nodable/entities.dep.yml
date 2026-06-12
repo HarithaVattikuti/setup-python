@@ -3,7 +3,7 @@ name: "@nodable/entities"
 version: 2.2.0
 type: npm
 summary: HTML entities encoding/decoding utilities
-homepage: https://github.com/NaturalIntelligence/any-num
+homepage: https://github.com/NaturalIntelligence/nodable-entities
 license: mit
 licenses:
 - sources: LICENSE
