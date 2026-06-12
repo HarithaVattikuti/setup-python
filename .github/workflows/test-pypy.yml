@@ -28,7 +28,7 @@ jobs:
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
             ubuntu-latest,
-            macos-13
+            macos-15-intel
           ]
         pypy:
           - 'pypy-2.7'
@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: setup-python ${{ matrix.pypy }}
         id: setup-python
@@ -85,7 +85,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - macos-13
+          - macos-15-intel
           - macos-14
           - macos-15
           - windows-2022
@@ -98,7 +98,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: setup-python ${{ matrix.pypy }}
         id: setup-python
@@ -144,13 +144,13 @@ jobs:
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
             ubuntu-latest,
-            macos-13
+            macos-15-intel
           ]
         pypy: ['pypy2.7', 'pypy3.9', 'pypy3.10-nightly', 'pypy3.11']
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: setup-python ${{ matrix.pypy }}
         id: setup-python
@@ -178,10 +178,10 @@ jobs:
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
             ubuntu-latest,
-            macos-13
+            macos-15-intel
           ]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup PyPy and check latest
         uses: ./
         with:
@@ -220,10 +220,10 @@ jobs:
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
             ubuntu-latest,
-            macos-13
+            macos-15-intel
           ]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup PyPy and check latest
         uses: ./
         with:

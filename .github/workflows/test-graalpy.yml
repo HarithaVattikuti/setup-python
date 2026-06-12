@@ -25,7 +25,7 @@ jobs:
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
             ubuntu-latest,
-            macos-13
+            macos-15-intel
           ]
         graalpy:
           - 'graalpy-22.3'
@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: setup-python ${{ matrix.graalpy }}
         id: setup-python
@@ -80,13 +80,13 @@ jobs:
             ubuntu-22.04-arm,
             ubuntu-24.04-arm,
             ubuntu-latest,
-            macos-13
+            macos-15-intel
           ]
         graalpy: ['graalpy22.3', 'graalpy23.0', 'graalpy23.1', 'graalpy24.1']
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: setup-python ${{ matrix.graalpy }}
         id: setup-python
@@ -106,9 +106,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, macos-13]
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-15-intel]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup GraalPy and check latest
         uses: ./
         id: graalpy

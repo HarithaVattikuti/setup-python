@@ -29,7 +29,7 @@ jobs:
             ubuntu-22.04-arm,
             windows-latest,
             macos-latest,
-            macos-13
+            macos-15-intel
           ]
         python-version:
           [
@@ -49,7 +49,7 @@ jobs:
             python-version: pypy-3.9-v7.x
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Python
         uses: ./
         with:
@@ -72,7 +72,7 @@ jobs:
             ubuntu-22.04-arm,
             windows-latest,
             macos-latest,
-            macos-13
+            macos-15-intel
           ]
         python-version:
           ['3.10', 'pypy-3.10-v7.x', '3.11', 'pypy-3.11-v7.x', '3.12', '3.13']
@@ -88,7 +88,7 @@ jobs:
           - os: ubuntu-22.04-arm
             python-version: pypy-3.10-v7.x
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Python
         id: cache-pipenv
         uses: ./
@@ -129,7 +129,7 @@ jobs:
             ubuntu-22.04-arm,
             windows-latest,
             macos-latest,
-            macos-13
+            macos-15-intel
           ]
         python-version:
           [
@@ -143,7 +143,7 @@ jobs:
             '3.13'
           ]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Install poetry
         run: pipx install poetry
       - name: Init pyproject.toml
@@ -170,7 +170,7 @@ jobs:
             ubuntu-22.04-arm,
             windows-latest,
             macos-latest,
-            macos-13
+            macos-15-intel
           ]
         python-version:
           [
@@ -189,7 +189,7 @@ jobs:
           - os: macos-latest
             python-version: pypy-3.9-v7.x
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Python
         uses: ./
         with:
@@ -213,7 +213,7 @@ jobs:
             ubuntu-22.04-arm,
             windows-latest,
             macos-latest,
-            macos-13
+            macos-15-intel
           ]
         python-version:
           ['3.10', 'pypy-3.10-v7.x', '3.11', 'pypy-3.11-v7.x', '3.12', '3.13']
@@ -227,7 +227,7 @@ jobs:
           - os: ubuntu-22.04-arm
             python-version: pypy-3.11-v7.x
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Python
         id: cache-pipenv
         uses: ./
@@ -269,11 +269,11 @@ jobs:
             ubuntu-22.04-arm,
             windows-latest,
             macos-latest,
-            macos-13
+            macos-15-intel
           ]
         python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Python
         uses: ./
         with:
@@ -297,11 +297,11 @@ jobs:
             ubuntu-22.04-arm,
             windows-latest,
             macos-latest,
-            macos-13
+            macos-15-intel
           ]
         python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Python
         uses: ./
         with:
@@ -326,11 +326,11 @@ jobs:
             ubuntu-22.04-arm,
             windows-latest,
             macos-latest,
-            macos-13
+            macos-15-intel
           ]
         python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Python
         uses: ./
         with:
@@ -352,11 +352,11 @@ jobs:
             ubuntu-22.04-arm,
             windows-latest,
             macos-latest,
-            macos-13
+            macos-15-intel
           ]
         python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Python
         uses: ./
         with:
