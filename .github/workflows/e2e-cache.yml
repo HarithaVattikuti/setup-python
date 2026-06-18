@@ -153,6 +153,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'poetry'
+      - name: Bootstrap packaging
+        run: |
+          python -m ensurepip --upgrade
+          python -m pip install --upgrade pip setuptools wheel packaging
       - name: Install dependencies
         run: poetry install --no-root
 
