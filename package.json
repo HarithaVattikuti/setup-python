@@ -8,6 +8,9 @@
   "engines": {
     "node": ">=24.0.0"
   },
+  "overrides": {
+    "brace-expansion": "^5.0.8"
+  },
   "scripts": {
     "build": "ncc build -o dist/setup src/setup-python.ts && ncc build -o dist/cache-save src/cache-save.ts",
     "format": "prettier --no-error-on-unmatched-pattern --write \"**/*.{ts,yml,yaml}\"",
